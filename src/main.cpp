@@ -1,9 +1,11 @@
 //
 // Created by antek on 13.01.2026.
 //
-
 #include <iostream>
+
+#include "factory.hpp"
+
 int main() {
-    std::cout<<1;
-    return 0;
+  factory();
+  return 0;
 }
