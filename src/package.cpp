@@ -3,3 +3,38 @@
 //
 
 #include "../include/package.hpp"
+
+std::set<ElementID> Package::assigned_IDs;
+std::set<ElementID> Package::freed_IDs;
+
+Package::Package() {
+    assign_ID();
+}
+
+Package::~Package() {
+    free_ID();
+}
+
+ElementID Package::get_id() const{
+    return id_;
+}
+
+void Package::assign_ID() {
+    if (!freed_IDs.empty()) {
+        auto it = freed_IDs.begin();
+        id_ = *it;
+        freed_IDs.erase(it);
+    }
+    else {
+        if (assigned_IDs.empty())
+            id_=1;
+        else
+            id_=*assigned_IDs.rbegin()+1;
+    }
+    assigned_IDs.insert(id_);
+}
+
+void Package::free_ID(){
+    assigned_IDs.erase(id_);
+    freed_IDs.insert(id_);
+}

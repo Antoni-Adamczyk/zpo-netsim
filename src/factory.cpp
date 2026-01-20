@@ -6,6 +6,3 @@
 
 #include <iostream>
 
-void factory() {
-    std::cout << "factory\n";
-}

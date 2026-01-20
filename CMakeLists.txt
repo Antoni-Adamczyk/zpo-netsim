@@ -16,7 +16,13 @@ add_executable(zpo_netsim
         src/package.cpp
         include/package.hpp
         src/reports.cpp
-        src/reports.hpp
+        include/reports.hpp
+        src/simulation.cpp
+        include/simulation.hpp
+        src/storage_types.cpp
+        include/storage_types.hpp
+        src/types.cpp
+        include/types.hpp
 )
 
 target_include_directories(zpo_netsim

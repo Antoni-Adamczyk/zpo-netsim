@@ -4,8 +4,8 @@
 #include <iostream>
 
 #include "factory.hpp"
-
+#include "../include/reports.hpp"
 int main() {
-  factory();
+
   return 0;
 }
