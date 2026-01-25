@@ -12,7 +12,23 @@ Package::Package() {
 }
 
 Package::~Package() {
-    free_ID();
+    if (id_ != 0) {
+        free_ID();
+    }
+}
+
+Package::Package(Package&& other) noexcept {
+    id_ = other.id_;
+    other.id_ = 0;   // 0 = brak ID
+}
+
+Package& Package::operator=(Package&& other) noexcept {
+    if (this != &other) {
+        free_ID();
+        id_ = other.id_;
+        other.id_ = 0;
+    }
+    return *this;
 }
 
 ElementID Package::get_id() const{

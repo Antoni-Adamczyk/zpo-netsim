@@ -13,6 +13,13 @@ class Package {
     Package();
     ~Package();
 
+    Package(const Package&) = delete;
+    Package& operator=(const Package&) = delete;
+
+    Package(Package&& other) noexcept;
+    Package& operator=(Package&& other) noexcept;
+
+
     ElementID get_id() const;
 
     private:
