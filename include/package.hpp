@@ -12,6 +12,7 @@ class Package {
     public:
     Package();
     ~Package();
+    explicit Package(ElementID id) : id_(id) {} // jeden elemet
 
     Package(const Package&) = delete;
     Package& operator=(const Package&) = delete;
