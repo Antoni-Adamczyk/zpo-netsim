@@ -23,10 +23,6 @@ enum class ReceiverType {
     WORKER, STOREHOUSE
 };
 
-enum class NodeColor {
-    UNVISITED, VISITED, VERIFIED
-};
-
 class IPackageReceiver {
 public:
     virtual void receive_package(Package&& p) = 0;
@@ -88,17 +84,33 @@ public:
 
     const std::optional<Package>& get_sending_buffer() const { return buffer_; };
 
-    ReceiverPreferences receiver_preferences_;
+    void add_receiver(IPackageReceiver* receiver) {
+        receiver_preferences_.add_receiver(receiver);
+    }
+
+    void remove_receiver(IPackageReceiver* receiver) {
+        receiver_preferences_.remove_receiver(receiver);
+    }
+
+    const ReceiverPreferences& receiver_preferences() const {
+        return receiver_preferences_;
+    }
+
 protected:
-    void push_package(Package&& moved_package) { buffer_.emplace(moved_package.get_id()); };
+    void push_package(Package&& p) {
+        buffer_ = std::move(p);
+    };
 
     std::optional<Package> buffer_ = std::nullopt;
+
+private:
+    ReceiverPreferences receiver_preferences_;
 };
 
 class Ramp : public PackageSender {
 public:
     Ramp(ElementID id, TimeOffset di)
-            : PackageSender(), id_(id), di_(di), t_(), buffer_(std::nullopt) {}
+            : PackageSender(), id_(id), di_(di), t_(0) {}
 
     void deliver_goods(Time t);
 
@@ -110,7 +122,6 @@ private:
     ElementID id_;
     TimeOffset di_;
     Time t_;
-    std::optional<Package> buffer_;
 };
 
 class Storehouse : public IPackageReceiver {
